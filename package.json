@@ -1,0 +1,18 @@
+{
+  "name": "moviesdb",
+  "version": "1.0.0",
+  "description": "API consumption ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d src"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "Juan Manuel Becerra",
+  "license": "MIT ",
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
+  }
+}
