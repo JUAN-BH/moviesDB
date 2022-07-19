@@ -1,1 +1,4 @@
 /node_modules/
+
+#Ocultamos la API KEY
+src/scripts/secrets.js
