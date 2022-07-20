@@ -170,6 +170,7 @@ function renderMovieInfo() {
 
   const movieId = location.hash.split("=")[1];
   displayMovieInformation(movieId);
+  displaySimilarMovies(movieId);
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 function renderCategoryMovies() {

@@ -219,12 +219,9 @@ async function displaySearchedMovies(query) {
 }
 async function displayMovieInformation(id) {
   const { data, status } = await api(`movie/${id}`);
-  const res = await api(`movie/${id}/similar`);
   const movie = data;
-  movieInfoImg.setAttribute(
-    "src",
-    `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-  );
+  const movieImage = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  movieInfoImg.setAttribute("src", movieImage);
   movieRate.innerText = movie.vote_average;
   movieInfoTitle.innerText = movie.title;
   movieDuration.innerText = `${movie.runtime} min`;
@@ -239,13 +236,16 @@ async function displayMovieInformation(id) {
     })
     .join("");
   movieInfoCategories.innerHTML = movieCategories;
+}
+async function displaySimilarMovies(id) {
+  const res = await api(`movie/${id}/recommendations`);
   const similarMovies = res.data.results
     .slice(0, 5)
     .map((movie) => {
       return `
     <article class="similar__movie movie" id="${movie.id}">
       <img
-        src="https://image.tmdb.org/t/p/w300${movie.poster_path}"
+        src="https://image.tmdb.org/t/p/w400${movie.poster_path}"
         alt="${movie.original_title}"
         class="movieImage similarMoviesMovieImg"
         id="${movie.id}"
