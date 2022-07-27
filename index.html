@@ -27,6 +27,13 @@
       <h1 class="topRatedHeader__title hidden">Top Rated</h1>
       <h1 class="upComingHeader__title hidden">Up Coming</h1>
       <img src="" alt="" class="movieInfoImg hidden" />
+      <select name="language" class="selectLanguage">
+        <!-- <option value="">Select Language</option> -->
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="pt">Português</option>
+      </select>
     </header>
     <main>
       <section class="searchInput">
@@ -40,7 +47,10 @@
       <section class="section categories">
         <h2 class="categories__title section__title">Categories</h2>
         <div class="categories__slider">
-          <!-- <span class="category">Action</span> -->
+          <span class="placeholder__category"></span>
+          <span class="placeholder__category"></span>
+          <span class="placeholder__category"></span>
+          <span class="placeholder__category"></span>
         </div>
       </section>
       <section class="section trends">
@@ -49,13 +59,15 @@
           <button class="btn__headerSection btn__trends">All</button>
         </div>
         <div class="trends__slider movies__slider">
-          <!-- <article class="trend__movie movie">
-            <img
-              src="https://pics.filmaffinity.com/Canguro_Jack-689661560-large.jpg"
-              alt=""
-              class="movieImage trendMovieImg"
-            />
-          </article> -->
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
         </div>
       </section>
       <section class="section topRated">
@@ -64,13 +76,15 @@
           <button class="btn__headerSection btn__topRated">All</button>
         </div>
         <div class="topRated__slider movies__slider">
-          <!-- <article class="topRated__movie movie">
-            <img
-              src="https://pics.filmaffinity.com/Canguro_Jack-689661560-large.jpg"
-              alt=""
-              class="movieImage topRatedMovieImg"
-            />
-          </article> -->
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
         </div>
       </section>
       <section class="section upcoming">
@@ -79,75 +93,82 @@
           <button class="btn__headerSection btn__upcoming">All</button>
         </div>
         <div class="upcoming__slider movies__slider">
-          <!-- <article class="upcoming__movie movie">
-            <img
-              src="https://pics.filmaffinity.com/Canguro_Jack-689661560-large.jpg"
-              alt=""
-              class="movieImage upcomingMovieImge"
-            />
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+        </div>
+      </section>
+      <section class="section myList">
+        <div class="headerSection">
+          <h2 class="myList__title section__title">My List</h2>
+          <button class="btn__headerSection btn__upcoming">All</button>
+        </div>
+        <div class="myList__slider movies__slider">
+          <!-- <article class="myList__movie movie ">
+            <img class="movieImage myListMovieImg" />
           </article> -->
         </div>
       </section>
       <section class="movieInfo hidden">
-        <h2 class="movieInfo__title section__title">Movie name</h2>
+        <div class="movieInfo__title">
+          <h2 class="placeholder__DR"></h2>
+        </div>
         <article class="movieInfo__infoContainer">
           <div class="rateContainer">
-            <span class="star"></span> <span class="rate">5</span>
+            <span class="placeholder__rate"></span>
           </div>
-          <p class="infoTitle movieInfoContent">
-            Duration: <span class="duration infoText">hola</span>
-          </p>
-          <p class="infoTitle movieInfoContent">
-            Release: <span class="release infoText">hola</span>
-          </p>
+          <div class="durationContainer">
+            <span class="placeholder__DR"></span>
+          </div>
+          <div class="releaseContainer">
+            <span class="placeholder__DR"></span>
+          </div>
         </article>
         <article class="movieInfo__categories">
-          <span class="categoryMovieInfo">Action</span>
-          <span class="categoryMovieInfo">Comedy</span>
-          <span class="categoryMovieInfo">Drama</span>
+          <span class="placeholder__categoryMovieInfo"></span>
+          <span class="placeholder__categoryMovieInfo"></span>
+          <span class="placeholder__categoryMovieInfo"></span>
         </article>
         <article class="movieInfo__description">
           <h2 class="movieInfo__title section__title">Description</h2>
-          <p class="description">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
-          </p>
+          <div class="descriptionInfoContainer">
+            <p class="placeholder__d&r"></p>
+          </div>
         </article>
       </section>
       <section class="section similarMovies hidden">
         <h2 class="section__title">Similar movies</h2>
         <div class="similarMovies__slider movies__slider">
-          <article class="similarMovie__movie movie">
-            <img
-              src="https://pics.filmaffinity.com/Canguro_Jack-689661560-large.jpg"
-              alt=""
-              class="movieImage similarMoviesMovieImg"
-            />
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
+          </article>
+          <article class="placeholder__movieSlider">
+            <img class="" />
           </article>
         </div>
       </section>
       <section class="results hidden">
         <div class="results__resultsContainer">
-          <!-- <article class="movieResult">
-            <img
-              src="https://pics.filmaffinity.com/Canguro_Jack-689661560-large.jpg"
-              class="imgMovieResult"
-            />
-            <div class="infoResult">
-              <p class="infoResult__text infoResult__MovieName">Movie name</p>
-              <p class="infoResult__text infoResult__MovieYear">2022</p>
-              <p class="infoResult__text infoResult__MovieRateContainer">
-                <span class="star"></span>
-                <span class="infoResult__MovieRate">5</span>
-              </p>
-            </div>
-          </article> -->
+          <article class="placeholder__movieResult"></article>
+          <article class="placeholder__movieResult"></article>
+          <article class="placeholder__movieResult"></article>
+          <article class="placeholder__movieResult"></article>
+          <article class="placeholder__movieResult"></article>
+          <article class="placeholder__movieResult"></article>
         </div>
       </section>
     </main>
     <footer>
-      <p>Made by Juan Manuel Becerra</p>
+      <p class="footer__text">Made by Juan Manuel Becerra</p>
       <div class="socialMedia">
         <a
           href="https://www.linkedin.com/in/juan-manuel-becerra-hernandez-11b93b239/"

@@ -1,7 +1,17 @@
+let maxPage;
+let page = 1;
+let infiniteScroll;
 window.addEventListener("DOMContentLoaded", navigation, false);
 window.addEventListener("hashchange", navigation, false);
+window.addEventListener("scroll", infiniteScroll, { passive: false });
 
 function navigation() {
+  if (infiniteScroll) {
+    window.removeEventListener("scroll", infiniteScroll, { passive: false });
+    infiniteScroll = undefined;
+    page = 1;
+  }
+
   console.log("location", { location });
   if (location.hash.startsWith("#trends")) {
     renderTrendsMovies();
@@ -17,6 +27,18 @@ function navigation() {
     renderCategoryMovies();
   } else {
     renderHome();
+    // changeLanguage();
+    // getSavedMovies();
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  if (infiniteScroll) {
+    window.addEventListener("scroll", infiniteScroll, { passive: false });
   }
 }
 function renderTrendsMovies() {
@@ -30,6 +52,10 @@ function renderTrendsMovies() {
   topRatedHeadertitle.classList.add("hidden");
   upComingHeadertitle.classList.add("hidden");
   movieInfoImg.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.position = "absolute";
+  langSelector.style.right = "30px";
+  langSelector.style.top = "12px";
   //render
   trendsHeadertitle.classList.remove("hidden");
   homeHeader.classList.add("backHeader");
@@ -41,12 +67,15 @@ function renderTrendsMovies() {
   trendsSection.classList.add("hidden");
   topRatedSection.classList.add("hidden");
   upComingSection.classList.add("hidden");
+  myListSection.classList.add("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.add("hidden");
   similarMoviesSection.classList.add("hidden");
   //*RESULTS
   resultsSection.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  resultsSection.style.marginTop = "50px";
+
+  infiniteScroll = getMoreTrendsMovies;
 }
 function renderTopRatedMovies() {
   console.log("TOP RATED");
@@ -59,6 +88,10 @@ function renderTopRatedMovies() {
   trendsHeadertitle.classList.add("hidden");
   upComingHeadertitle.classList.add("hidden");
   movieInfoImg.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.position = "absolute";
+  langSelector.style.right = "30px";
+  langSelector.style.top = "12px";
   //render
   topRatedHeadertitle.classList.remove("hidden");
   homeHeader.classList.add("backHeader");
@@ -70,12 +103,15 @@ function renderTopRatedMovies() {
   trendsSection.classList.add("hidden");
   topRatedSection.classList.add("hidden");
   upComingSection.classList.add("hidden");
+  myListSection.classList.add("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.add("hidden");
   similarMoviesSection.classList.add("hidden");
   //*RESULTS
   resultsSection.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  resultsSection.style.marginTop = "50px";
+
+  infiniteScroll = getMoreTopRatedMovies;
 }
 function renderUpComingMovies() {
   console.log("UP COMING");
@@ -88,6 +124,10 @@ function renderUpComingMovies() {
   trendsHeadertitle.classList.add("hidden");
   topRatedHeadertitle.classList.add("hidden");
   movieInfoImg.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.position = "absolute";
+  langSelector.style.right = "30px";
+  langSelector.style.top = "12px";
   //render
   upComingHeadertitle.classList.remove("hidden");
   homeHeader.classList.add("backHeader");
@@ -99,12 +139,15 @@ function renderUpComingMovies() {
   trendsSection.classList.add("hidden");
   topRatedSection.classList.add("hidden");
   upComingSection.classList.add("hidden");
+  myListSection.classList.add("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.add("hidden");
   similarMoviesSection.classList.add("hidden");
   //*RESULTS
   resultsSection.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  resultsSection.style.marginTop = "50px";
+
+  infiniteScroll = getMoreUpComingMovies;
 }
 function renderSearchMovies() {
   console.log("SEARCH");
@@ -117,6 +160,10 @@ function renderSearchMovies() {
   topRatedHeadertitle.classList.add("hidden");
   upComingHeadertitle.classList.add("hidden");
   movieInfoImg.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.position = "absolute";
+  langSelector.style.right = "30px";
+  langSelector.style.top = "12px";
   //render
   homeHeader.classList.add("backHeader");
   searchHeaderTitle.classList.remove("hidden");
@@ -124,21 +171,23 @@ function renderSearchMovies() {
   arrowBack.classList.remove("arrowBackMovieInfo");
   //*BODYHOME
   searchInputSection.style.display = "flex";
+  searchInputSection.style.marginTop = "74px";
   categoriesSection.classList.add("hidden");
   trendsSection.classList.add("hidden");
   topRatedSection.classList.add("hidden");
   upComingSection.classList.add("hidden");
+  myListSection.classList.add("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.add("hidden");
   similarMoviesSection.classList.add("hidden");
   //*RESULTS
   resultsSection.classList.remove("hidden");
+  resultsSection.style.marginTop = "11px";
 
   const search = location.hash.split("=")[1];
   // console.log("search", search.replace(/%20/g, " "));
   displaySearchedMovies(search.replace(/%20/g, " "));
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  infiniteScroll = getMoreSearchMovies(search.replace(/%20/g, " "));
 }
 function renderMovieInfo() {
   console.log("MOVIE INFO");
@@ -151,6 +200,12 @@ function renderMovieInfo() {
   trendsHeadertitle.classList.add("hidden");
   topRatedHeadertitle.classList.add("hidden");
   upComingHeadertitle.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.position = "absolute";
+  langSelector.style.top = "568px";
+  langSelector.style.right = "30px";
+  langSelector.style.border = "1px solid #0f4c75";
+
   //render
   homeHeader.classList.add("movieInfoHeader");
   arrowBack.style.display = "flex";
@@ -162,6 +217,7 @@ function renderMovieInfo() {
   trendsSection.classList.add("hidden");
   topRatedSection.classList.add("hidden");
   upComingSection.classList.add("hidden");
+  myListSection.classList.add("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.remove("hidden");
   similarMoviesSection.classList.remove("hidden");
@@ -169,9 +225,9 @@ function renderMovieInfo() {
   resultsSection.classList.add("hidden");
 
   const movieId = location.hash.split("=")[1];
-  displayMovieInformation(movieId);
+  // displayMovieInformation(movieId);
+  getMovieLanguages(movieId, "de");
   displaySimilarMovies(movieId);
-  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 function renderCategoryMovies() {
   console.log("CATEGORY");
@@ -185,6 +241,11 @@ function renderCategoryMovies() {
   topRatedHeadertitle.classList.add("hidden");
   upComingHeadertitle.classList.add("hidden");
   movieInfoImg.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.position = "absolute";
+  langSelector.style.right = "30px";
+  langSelector.style.top = "12px";
+
   //render
   homeHeader.classList.add("backHeader");
   categoryHeaderTitle.classList.remove("hidden");
@@ -196,6 +257,7 @@ function renderCategoryMovies() {
   trendsSection.classList.add("hidden");
   topRatedSection.classList.add("hidden");
   upComingSection.classList.add("hidden");
+  myListSection.classList.add("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.add("hidden");
   similarMoviesSection.classList.add("hidden");
@@ -206,7 +268,7 @@ function renderCategoryMovies() {
   const nameGenre = location.hash.split("=")[1].split("-")[1];
   categoryHeaderTitle.innerHTML = `${nameGenre}`;
   getMoviesByCategory(idGenre);
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  infiniteScroll = getMoreCategoriesMovies;
 }
 function renderHome() {
   console.log("HOME");
@@ -219,6 +281,12 @@ function renderHome() {
   topRatedHeadertitle.classList.add("hidden");
   upComingHeadertitle.classList.add("hidden");
   movieInfoImg.classList.add("hidden");
+  langSelector.classList.remove("hidden");
+  langSelector.style.marginLeft = "120px";
+  langSelector.style.position = "absolute";
+  langSelector.style.right = "30px";
+  langSelector.style.top = "12px";
+
   //render
   homeHeader.classList.remove("backHeader");
   homeHeader.classList.remove("movieInfoHeader");
@@ -226,11 +294,13 @@ function renderHome() {
 
   //*BODYHOME
   searchInputSection.style.display = "flex";
+  searchInputSection.style.marginTop = "20px";
   inputSearch.value = "";
   categoriesSection.classList.remove("hidden");
   trendsSection.classList.remove("hidden");
   topRatedSection.classList.remove("hidden");
   upComingSection.classList.remove("hidden");
+  myListSection.classList.remove("hidden");
   //*MOVIEINFO
   movieInfoSection.classList.add("hidden");
   similarMoviesSection.classList.add("hidden");
@@ -241,13 +311,15 @@ function renderHome() {
   getTrendMoviesPrev();
   getTopRatedMoviesPrev();
   getUpComingMoviesPrev();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  getSavedMovies();
 }
 
 arrowBack.addEventListener("click", function () {
   // location.hash = "#home";
   history.back();
   // results__resultsContainer.innerHTML = "";
+  homeHeader.removeChild(movieTtitleFail);
+  homeHeader.appendChild(movieInfoImg);
 });
 inputSearch.addEventListener("keydown", function (e) {
   if (e.keyCode === 13) {
