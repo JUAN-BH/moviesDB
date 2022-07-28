@@ -12,7 +12,7 @@ function navigation() {
     page = 1;
   }
 
-  console.log("location", { location });
+  // console.log("location", { location });
   if (location.hash.startsWith("#trends")) {
     renderTrendsMovies();
   } else if (location.hash.startsWith("#topRated")) {
@@ -42,7 +42,7 @@ function navigation() {
   }
 }
 function renderTrendsMovies() {
-  console.log("TRENDS");
+  // console.log("TRENDS");
   //*HEADER
   //hide
   homeHeader.classList.remove("movieInfoHeader");
@@ -56,6 +56,7 @@ function renderTrendsMovies() {
   langSelector.style.position = "absolute";
   langSelector.style.right = "30px";
   langSelector.style.top = "12px";
+  movie__btn.classList.add("hidden");
   //render
   trendsHeadertitle.classList.remove("hidden");
   homeHeader.classList.add("backHeader");
@@ -78,7 +79,7 @@ function renderTrendsMovies() {
   infiniteScroll = getMoreTrendsMovies;
 }
 function renderTopRatedMovies() {
-  console.log("TOP RATED");
+  // console.log("TOP RATED");
   //*HEADER
   //hide
   homeHeader.classList.remove("movieInfoHeader");
@@ -92,6 +93,8 @@ function renderTopRatedMovies() {
   langSelector.style.position = "absolute";
   langSelector.style.right = "30px";
   langSelector.style.top = "12px";
+  movie__btn.classList.add("hidden");
+
   //render
   topRatedHeadertitle.classList.remove("hidden");
   homeHeader.classList.add("backHeader");
@@ -114,7 +117,7 @@ function renderTopRatedMovies() {
   infiniteScroll = getMoreTopRatedMovies;
 }
 function renderUpComingMovies() {
-  console.log("UP COMING");
+  // console.log("UP COMING");
   //*HEADER
   //hide
   homeHeader.classList.remove("movieInfoHeader");
@@ -128,6 +131,8 @@ function renderUpComingMovies() {
   langSelector.style.position = "absolute";
   langSelector.style.right = "30px";
   langSelector.style.top = "12px";
+  movie__btn.classList.add("hidden");
+
   //render
   upComingHeadertitle.classList.remove("hidden");
   homeHeader.classList.add("backHeader");
@@ -150,7 +155,7 @@ function renderUpComingMovies() {
   infiniteScroll = getMoreUpComingMovies;
 }
 function renderSearchMovies() {
-  console.log("SEARCH");
+  // console.log("SEARCH");
   //*HEADER
   //hide
   homeHeader.classList.remove("movieInfoHeader");
@@ -164,6 +169,8 @@ function renderSearchMovies() {
   langSelector.style.position = "absolute";
   langSelector.style.right = "30px";
   langSelector.style.top = "12px";
+  movie__btn.classList.add("hidden");
+
   //render
   homeHeader.classList.add("backHeader");
   searchHeaderTitle.classList.remove("hidden");
@@ -190,7 +197,7 @@ function renderSearchMovies() {
   infiniteScroll = getMoreSearchMovies(search.replace(/%20/g, " "));
 }
 function renderMovieInfo() {
-  console.log("MOVIE INFO");
+  // console.log("MOVIE INFO");
   //*HEADER
   //hide
   homeHeader.classList.remove("backHeader");
@@ -205,6 +212,7 @@ function renderMovieInfo() {
   langSelector.style.top = "568px";
   langSelector.style.right = "30px";
   langSelector.style.border = "1px solid #0f4c75";
+  movie__btn.classList.remove("hidden");
 
   //render
   homeHeader.classList.add("movieInfoHeader");
@@ -230,8 +238,6 @@ function renderMovieInfo() {
   displaySimilarMovies(movieId);
 }
 function renderCategoryMovies() {
-  console.log("CATEGORY");
-  console.log("SEARCH");
   //*HEADER
   //hide
   homeHeader.classList.remove("movieInfoHeader");
@@ -245,6 +251,7 @@ function renderCategoryMovies() {
   langSelector.style.position = "absolute";
   langSelector.style.right = "30px";
   langSelector.style.top = "12px";
+  movie__btn.classList.add("hidden");
 
   //render
   homeHeader.classList.add("backHeader");
@@ -266,12 +273,13 @@ function renderCategoryMovies() {
 
   const idGenre = location.hash.split("=")[1].split("-")[0];
   const nameGenre = location.hash.split("=")[1].split("-")[1];
-  categoryHeaderTitle.innerHTML = `${nameGenre}`;
+  // console.log("nameGenre", nameGenre);
+  categoryHeaderTitle.innerHTML = `${decodeURI(nameGenre)}`;
   getMoviesByCategory(idGenre);
   infiniteScroll = getMoreCategoriesMovies;
 }
 function renderHome() {
-  console.log("HOME");
+  // console.log("HOME");
   //*HEADER
   //hide
   arrowBack.style.display = "none";
@@ -286,6 +294,7 @@ function renderHome() {
   langSelector.style.position = "absolute";
   langSelector.style.right = "30px";
   langSelector.style.top = "12px";
+  movie__btn.classList.add("hidden");
 
   //render
   homeHeader.classList.remove("backHeader");

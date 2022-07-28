@@ -21,7 +21,7 @@ function savedMovies() {
 }
 function saveMovie(movie) {
   const saved = savedMovies();
-  console.log("SAVED", saved);
+  // console.log("SAVED", saved);
   if (saved[movie.id]) {
     saved[movie.id] = undefined;
   } else {
@@ -35,7 +35,9 @@ function saveMovie(movie) {
 }
 //*GETTING CATEGOIRES
 async function getCategoriesHome() {
-  const { data, status } = await api(`genre/movie/list`);
+  const { data, status } = await api(`genre/movie/list`, {
+    params: { language: `${langSelector.value}` },
+  });
   const categories = data.genres;
   // categoriesHome.innerHTML = "";
   const categoriesNames = categories
@@ -45,10 +47,10 @@ async function getCategoriesHome() {
         " ",
         ""
       )}</span>
-
               `;
     })
     .join("");
+
   categoriesHome.innerHTML = categoriesNames;
   const categoriesSpan = document.querySelectorAll(".category");
   categoriesSpan.forEach((e) => {
@@ -126,13 +128,17 @@ async function getUpComingMoviesPrev() {
 function getSavedMovies() {
   const saved = savedMovies();
   const savedMoviesValues = Object.values(saved);
-  // console.log("SAVED MOVIES", savedMoviesValues);
-  renderSlidersMovies(
-    savedMoviesValues,
-    myListPrevSlider,
-    "myList__movie",
-    "myListMovieImg"
-  );
+  // console.log("SAVED", savedMoviesValues);
+  if (savedMoviesValues.length == 0) {
+    myListPrevSlider.innerHTML = `<h2 class="noMovies">It seems that you haven't saved anything yet <br>  (´。＿。｀)</h2>`;
+  } else {
+    renderSlidersMovies(
+      savedMoviesValues,
+      myListPrevSlider,
+      "myList__movie",
+      "myListMovieImg"
+    );
+  }
 }
 //*GETTING RESULTS BY CATEGORIES, TREND, TOP RATED, UPCOMING AND SEARCH
 const renderResultMovies = (movies, { clean = true } = {}) => {
@@ -184,9 +190,9 @@ const renderResultMovies = (movies, { clean = true } = {}) => {
 
     const movie__btn = document.createElement("button");
     movie__btn.classList.add("movie__btn");
-    // savedMovies()[e.id] && movie__btn.classList.add("movie__btn--active");
+    savedMovies()[e.id] && movie__btn.classList.add("movie__btn--active");
     movie__btn.addEventListener("click", () => {
-      console.log("CLICKED");
+      // console.log("CLICKED");
       movie__btn.classList.toggle("movie__btn--active");
       saveMovie(e);
       // getSavedMovies();
@@ -234,7 +240,7 @@ async function getMoreMovies(endpoint) {
       },
     });
     const movies = data.results;
-    console.log("SCROLL", data);
+    // console.log("SCROLL", data);
     renderResultMovies(movies, { clean: false });
   }
 }
@@ -265,7 +271,7 @@ function getMoreSearchMovies(query) {
         },
       });
       const movies = data.results;
-      console.log("SCROLL", data);
+      // console.log("SCROLL", data);
       renderResultMovies(movies, { clean: false });
     }
   };
@@ -308,7 +314,7 @@ async function displaySearchedMovies(query) {
   });
   const movies = data.results;
   maxPage = data.total_pages;
-  console.log("searchedMovies", data);
+  // console.log("searchedMovies", data);
   if (movies.length == 0) {
     results__resultsContainer.innerHTML = `
     <article class="noResultsFounded">
@@ -329,6 +335,7 @@ function displayMovieInformation({
   date,
   overView,
   genres,
+  data,
 }) {
   // const { data, status } = await api(`movie/${id}`);
   // const movie = data;
@@ -341,6 +348,15 @@ function displayMovieInformation({
   } else {
     movieInfoImg.setAttribute("src", movieImage);
   }
+  // const movie__btn = document.querySelector(".movie__btn");
+  savedMovies()[data.id] && movie__btn.classList.add("movie__btn--active");
+  movie__btn.addEventListener("click", () => {
+    // console.log("CLICKED");
+    movie__btn.classList.toggle("movie__btn--active");
+    saveMovie(data);
+    // getSavedMovies();
+  });
+  // movieInfoHeader.appendChild(movie__btn);
   movieInfoTitle.innerHTML = `
   <h2 class="section__title fadeIn">${title}</h2>
   `;
@@ -430,9 +446,9 @@ async function getMovieLanguages(id) {
     date: data.release_date,
     overView: data.overview,
     genres: data.genres,
+    data: data,
   });
 }
-
 function langs({
   lang,
   searchPlaceholder,
@@ -442,10 +458,7 @@ function langs({
   upComing,
   myList,
   footerText,
-  duration,
-  release,
-  description,
-  similarMovies,
+  seeMore,
 } = {}) {
   this.lang = lang;
   this.captions = {
@@ -456,12 +469,7 @@ function langs({
     upComing: upComing,
     myList: myList,
     footerText: footerText,
-  };
-  this.movieInformation = {
-    duration: duration,
-    release: release,
-    description: description,
-    similarMovies: similarMovies,
+    seeMore: seeMore,
   };
 }
 const langsEN = new langs({
@@ -473,10 +481,7 @@ const langsEN = new langs({
   upComing: "Up Coming",
   myList: "My List",
   footerText: "Made by Juan Manuel Becerra",
-  duration: "Duration",
-  release: "Release",
-  description: "Description",
-  similarMovies: "Similar Movies",
+  seeMore: "See more",
 });
 const langsES = new langs({
   lang: "es",
@@ -487,10 +492,7 @@ const langsES = new langs({
   upComing: "Próximas Estrenos",
   myList: "Mi Lista",
   footerText: "Hecho por Juan Manuel Becerra",
-  duration: "Duración",
-  release: "Estreno",
-  description: "Descripción",
-  similarMovies: "Peliculas Similares",
+  seeMore: "Ver más",
 });
 const langsFR = new langs({
   lang: "fr",
@@ -501,10 +503,7 @@ const langsFR = new langs({
   upComing: "Prochaines sorties",
   myList: "Ma liste",
   footerText: "Créé par Juan Manuel Becerra",
-  duration: "Durée",
-  release: "Sortie",
-  description: "Description",
-  similarMovies: "Pelicules similaires",
+  seeMore: "Voir plus",
 });
 const langsPT = new langs({
   lang: "pt",
@@ -515,10 +514,7 @@ const langsPT = new langs({
   upComing: "Próximas Lançamentos",
   myList: "Minha Lista",
   footerText: "Feito por Juan Manuel Becerra",
-  duration: "Duração",
-  release: "Lançamento",
-  description: "Descrição",
-  similarMovies: "Peliculas Similares",
+  seeMore: "Ver mais",
 });
 langSelector.addEventListener("change", changeLanguage);
 function changeLanguage() {
@@ -528,33 +524,60 @@ function changeLanguage() {
     trendsTitle.innerHTML = langsES.captions.trends;
     topRatedTitle.innerHTML = langsES.captions.topRated;
     upComingTitle.innerHTML = langsES.captions.upComing;
+    btn__trends.innerHTML = langsES.captions.seeMore;
+    btn__topRated.innerHTML = langsES.captions.seeMore;
+    btn__upComing.innerHTML = langsES.captions.seeMore;
     myList.innerHTML = langsES.captions.myList;
     footerText.innerHTML = langsES.captions.footerText;
+    trendsHeadertitle.innerHTML = langsES.captions.trends;
+    topRatedHeadertitle.innerHTML = langsES.captions.topRated;
+    upComingHeadertitle.innerHTML = langsES.captions.upComing;
   } else if (langSelector.value == "en") {
     searchInput.setAttribute("placeholder", langsEN.captions.searchPlaceholder);
     categoriesTitle.innerHTML = langsEN.captions.categories;
     trendsTitle.innerHTML = langsEN.captions.trends;
     topRatedTitle.innerHTML = langsEN.captions.topRated;
     upComingTitle.innerHTML = langsEN.captions.upComing;
+    btn__trends.innerHTML = langsEN.captions.seeMore;
+    btn__topRated.innerHTML = langsEN.captions.seeMore;
+    btn__upComing.innerHTML = langsEN.captions.seeMore;
     myList.innerHTML = langsEN.captions.myList;
     footerText.innerHTML = langsEN.captions.footerText;
+    trendsHeadertitle.innerHTML = langsEN.captions.trends;
+    topRatedHeadertitle.innerHTML = langsEN.captions.topRated;
+    upComingHeadertitle.innerHTML = langsEN.captions.upComing;
   } else if (langSelector.value == "fr") {
     searchInput.setAttribute("placeholder", langsFR.captions.searchPlaceholder);
     categoriesTitle.innerHTML = langsFR.captions.categories;
     trendsTitle.innerHTML = langsFR.captions.trends;
     topRatedTitle.innerHTML = langsFR.captions.topRated;
     upComingTitle.innerHTML = langsFR.captions.upComing;
+    btn__trends.innerHTML = langsFR.captions.seeMore;
+    btn__topRated.innerHTML = langsFR.captions.seeMore;
+    btn__upComing.innerHTML = langsFR.captions.seeMore;
+
     myList.innerHTML = langsFR.captions.myList;
     footerText.innerHTML = langsFR.captions.footerText;
+    trendsHeadertitle.innerHTML = langsFR.captions.trends;
+    topRatedHeadertitle.innerHTML = langsFR.captions.topRated;
+    upComingHeadertitle.innerHTML = langsFR.captions.upComing;
   } else if (langSelector.value == "pt") {
     searchInput.setAttribute("placeholder", langsPT.captions.searchPlaceholder);
     categoriesTitle.innerHTML = langsPT.captions.categories;
     trendsTitle.innerHTML = langsPT.captions.trends;
     topRatedTitle.innerHTML = langsPT.captions.topRated;
     upComingTitle.innerHTML = langsPT.captions.upComing;
+    btn__trends.innerHTML = langsPT.captions.seeMore;
+    btn__topRated.innerHTML = langsPT.captions.seeMore;
+    btn__upComing.innerHTML = langsPT.captions.seeMore;
+
     myList.innerHTML = langsPT.captions.myList;
     footerText.innerHTML = langsPT.captions.footerText;
+    trendsHeadertitle.innerHTML = langsPT.captions.trends;
+    topRatedHeadertitle.innerHTML = langsPT.captions.topRated;
+    upComingHeadertitle.innerHTML = langsPT.captions.upComing;
   }
   const movieId = location.hash.split("=")[1];
   getMovieLanguages(movieId);
+  getCategoriesHome();
 }
