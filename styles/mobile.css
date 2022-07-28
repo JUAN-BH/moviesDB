@@ -297,10 +297,10 @@ main {
   outline: none;
 }
 .btnSearch {
-  width: 35px;
+  width: 40px;
   height: 33px;
   border-radius: 0px 11px 11px 0px;
-  background: center/20px url("/src/assets/icons/searchIcon.svg") no-repeat;
+  background: center/20px url("../assets/icons/searchIcon.svg") no-repeat;
   background-color: var(--secondaryColor);
   border: none;
 }
@@ -329,6 +329,13 @@ main {
   border-radius: 16px;
   box-shadow: 0px 4px 4px rgba(50, 130, 184, 0.25);
   background-color: var(--secondaryColor);
+}
+
+.noMovies {
+  text-align: center;
+  margin: auto;
+  color: var(--primaryColor);
+  font-size: var(--text);
 }
 
 footer {

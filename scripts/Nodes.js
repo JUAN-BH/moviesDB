@@ -1,6 +1,7 @@
 const $ = (selector) => document.querySelector(selector);
 //*HEADER
 const homeHeader = $(".homeHeader");
+const movie__btn = $(".movie__btn");
 //*HEADER ELEMENTS
 const homeHeaderTitle = $(".homeHeader__title"); //movieDB
 const searchHeaderTitle = $(".searchHeader__title"); //results
